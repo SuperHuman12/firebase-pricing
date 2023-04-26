@@ -4,114 +4,118 @@
     <meta charset="UTF-8">
     <title>Firebase Pricing Calculator FREE</title>
     <script defer data-domain="firebasepricing.com" src="https://plausible.io/js/script.js"></script>
+    <!-- Include Bootstrap v5 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta1/css/bootstrap.min.css">
+    <style>
+        .result-section {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
 
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Firebase Pricing Calculator FREE</h2>
 
-<form>
-  <label>Number of users</label>
-  <input type="number" id="" value="1000">
-  <br>
-  <label>Each user reads on average</label>
-  <input type="number" id="" value="120">
-  <br>
-  <label>Each user writes on average</label>
-  <input type="number" id="" value="70">  
-</from>  
+    <form>
+        <div class="mb-3">
+            <label class="form-label">Number of users</label>
+            <input type="number" class="form-control" value="1000">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Each user reads on average</label>
+            <input type="number" class="form-control" value="120">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Each user writes on average</label>
+            <input type="number" class="form-control" value="70">
+        </div>
+    </form>
 
+    <h4 class="mt-4">🔥 Firestore</h4>
+    <form>
+        <div class="mb-3">
+            <label class="form-label">Number of reads daily:</label>
+            <input type="number" class="form-control" id="reads" value="120000">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Number of writes daily:</label>
+            <input type="number" class="form-control" id="writes" value="70000">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="calculateCost()">Calculate Firestore Cost</button>
+    </form>
+    <div class="result-section mt-3">
+        <p>Estimated cost everyday: $<span id="cost"></span></p>
+        <p>Estimated cost monthly: $<span id="costmonthly"></span></p>
+    </div>
 
+    <hr>
 
-<h4>🔥 Firestore</h4>
-<form>
-  <label>Number of reads daily:</label>
-  <input type="number" id="reads" value="120000">
-  <br>
-  <label>Number of writes daily:</label>
-  <input type="number" id="writes" value="70000">
-  <br>
-</from>  
-  <button type="button" onclick="calculateCost()">Calculate Firestore Cost</button>
-</form>
-<br>
-<p>Estimated cost everyday: $<span id="cost"></span></p>
-<p>Estimated cost monthly: $<span id="costmonthly"></span></p>
-
-
-<hr>
-<hr>
-
-
-<h4>🗄 Storage</h4>
-
-<form>
-  <label>Number of reads daily:</label>
-  <input type="number" id="storagereads" value="120000">
-  <br>
-  <label>Number of writes daily:</label>
-  <input type="number" id="storagewrites" value="70000">
-  <br>
-  <button type="button" onclick="calculateNewCost()">Calculate Storage Cost</button>
-</form>
-<br>
+    <h4 class="mt-4">🗄 Storage</h4>
+    <form>
+        <div class="mb-3">
+            <label class="form-label">Number of reads daily:</label>
+            <input type="number" class="form-control" id="storagereads" value="120000">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Number of writes daily:</label>
+            <input type="number" class="form-control" id="storagewrites" value="70000">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="calculateNewCost()">Calculate Storage Cost</button>
+    </form>
+    <div class="result-section mt-3">
+       
 <p>Estimated cost everyday: $<span id="storagecost"></span></p>
-<p>Estimated cost monthly: $<span id="storagecostmonthly"></span></p>
-
-
-
-
-
+        <p>Estimated cost monthly: $<span id="storagecostmonthly"></span></p>
+    </div>
+</div>
 <script>
     function calculateCost() {
-  const reads = parseInt(document.getElementById("reads").value);
-  const writes = parseInt(document.getElementById("writes").value);
-  const freeReads = 0;
-  const freeWrites = 0;
-  const readCost = 0.06;
-  const writeCost = 0.18;
+        const reads = parseInt(document.getElementById("reads").value);
+        const writes = parseInt(document.getElementById("writes").value);
+        const freeReads = 0;
+        const freeWrites = 0;
+        const readCost = 0.06;
+        const writeCost = 0.18;
 
-  let readCostTotal = 0;
-  let writeCostTotal = 0;
-  if (reads > freeReads) {
-    readCostTotal = (reads - freeReads) * readCost / 100000;
-  }
-  if (writes > freeWrites) {
-    writeCostTotal = (writes - freeWrites) * writeCost / 100000;
-  }
-  const cost = readCostTotal + writeCostTotal;
-  document.getElementById("cost").innerHTML = cost.toFixed(2);
-  document.getElementById("costmonthly").innerHTML = (cost*30).toFixed(2);
+        let readCostTotal = 0;
+        let writeCostTotal = 0;
+        if (reads > freeReads) {
+            readCostTotal = (reads - freeReads) * readCost / 100000;
+        }
+        if (writes > freeWrites) {
+            writeCostTotal = (writes - freeWrites) * writeCost / 100000;
+        }
+        const cost = readCostTotal + writeCostTotal;
+        document.getElementById("cost").innerHTML = cost.toFixed(2);
+        document.getElementById("costmonthly").innerHTML = (cost*30).toFixed(2);
     }
 
+    function calculateNewCost() {
+        const newReads = parseInt(document.getElementById("storagereads").value);
+        const newWrites = parseInt(document.getElementById("storagewrites").value);
+        const newFreeReads = 0;
+        const newFreeWrites = 0;
+        const newReadCost = 0.05;
+        const newWriteCost = 0.05;
+
+        let newReadCostTotal = 0;
+        let newWriteCostTotal = 0;
+        if (newReads > newFreeReads) {
+            newReadCostTotal = (newReads - newFreeReads) * newReadCost / 100000;
+        }
+        if (newWrites > newFreeWrites) {
+            newWriteCostTotal = (newWrites - newFreeWrites) * newWriteCost / 100000;
+        }
+        const newCost = newReadCostTotal + newWriteCostTotal;
+        document.getElementById("storagecost").innerHTML = newCost.toFixed(2);
+        document.getElementById("storagecostmonthly").innerHTML = (newCost*30).toFixed(2);
+    }
 </script>
-
-
-<script>
-function calculateNewCost() {
-  const newReads = parseInt(document.getElementById("storagereads").value);
-  const newWrites = parseInt(document.getElementById("storagewrites").value);
-  const newFreeReads = 0;
-  const newFreeWrites = 0;
-  const newReadCost = 0.05;
-  const newWriteCost = 0.05;
-
-  let newReadCostTotal = 0;
-  let newWriteCostTotal = 0;
-  if (newReads > newFreeReads) {
-    newReadCostTotal = (newReads - newFreeReads) * newReadCost / 100000;
-  }
-  if (newWrites > newFreeWrites) {
-    newWriteCostTotal = (newWrites - newFreeWrites) * newWriteCost / 100000;
-  }
-  const newCost = newReadCostTotal + newWriteCostTotal;
-  document.getElementById("storagecost").innerHTML = newCost.toFixed(2);
-  document.getElementById("storagecostmonthly").innerHTML = (newCost*30).toFixed(2);
-    
-}
-
-
-</script>
-
-
-
+<!-- Include Bootstrap v5 JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.min.js"></script>
 </body>
 </html>
